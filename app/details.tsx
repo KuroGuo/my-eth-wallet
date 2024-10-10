@@ -3,7 +3,9 @@ import { WebView, WebViewNavigation } from 'react-native-webview'
 import { useEffect, useRef, useState } from 'react'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme'
-import { BackHandler, Button } from 'react-native'
+import { BackHandler, Button, View } from 'react-native'
+import { useActionSheet } from '@expo/react-native-action-sheet';
+import * as Clipboard from 'expo-clipboard'
 
 const address = "0xe0d189e654efaa8b2593738088c2cd307ad98834"
 const injectedJavaScript = `
@@ -169,12 +171,43 @@ export default function Details() {
     setCanGoBack(navState.canGoBack)
   }
 
+  const { showActionSheetWithOptions } = useActionSheet()
+
+  const openMenu = () => {
+    const options = ['刷新', '复制链接', '取消']
+    const cancelButtonIndex = 2
+
+    showActionSheetWithOptions(
+      {
+        options,
+        cancelButtonIndex,
+        textStyle: { flex: 1, textAlign: 'center' }
+      },
+      (selectedIndex) => {
+        switch (selectedIndex) {
+          case 0:
+            // 处理选项1
+            webviewRef.current?.reload()
+            break;
+          case 1:
+            // 处理选项2
+            Clipboard.setStringAsync('https://www.voicore.shop/');
+            break;
+          case 2:
+            // 处理选项3
+            console.log('选择了选项3')
+            break
+        }
+      }
+    )
+  }
+
   return (
     <>
       <Stack.Screen
         options={{
           title: '详情', headerRight: () => {
-            return (<Button title='刷新' onPress={() => { webviewRef.current?.reload() }} />)
+            return (<Button title='菜单' onPress={() => { openMenu() }} />)
           },
           gestureEnabled: !canGoBack
         }}
@@ -188,7 +221,6 @@ export default function Details() {
         injectedJavaScriptBeforeContentLoaded={injectedJavaScript}
         onNavigationStateChange={onNavigationStateChange}
         allowsBackForwardNavigationGestures={true}
-
       />
     </>
   );

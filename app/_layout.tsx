@@ -9,6 +9,7 @@ import { useColorScheme } from '@/hooks/useColorScheme'
 import Constants from 'expo-constants'
 import { hide, isVisible, useHideAnimation } from 'react-native-bootsplash'
 import { Ionicons } from '@expo/vector-icons';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 // import BootSplash from 'react-native-bootsplash'
 
 // // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -43,16 +44,18 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{
-        animation: 'ios',
-        headerBackTitle: "返回",
-        headerTitleAlign: 'center'
-      }}>
-        <Stack.Screen name="(tabs)" options={{
-          headerShown: false
-        }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <ActionSheetProvider useCustomActionSheet={true}>
+        <Stack screenOptions={{
+          animation: 'ios',
+          headerBackTitle: "返回",
+          headerTitleAlign: 'center'
+        }}>
+          <Stack.Screen name="(tabs)" options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </ActionSheetProvider>
     </ThemeProvider>
   )
 }

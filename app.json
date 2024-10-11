@@ -8,7 +8,8 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kurokwok.myethwallet"
     },
     "android": {
       "adaptiveIcon": {
@@ -39,7 +40,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "edf57819-55da-4278-9611-71a2bdd325f6"
+        "projectId": "1f5d92fa-2727-4dbb-bd3e-9e0a181ad2cb"
       }
     }
   }

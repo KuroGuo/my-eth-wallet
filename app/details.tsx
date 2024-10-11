@@ -1,14 +1,15 @@
 import { Stack } from 'expo-router'
 import { WebView, WebViewNavigation } from 'react-native-webview'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme'
-import { BackHandler, TouchableOpacity } from 'react-native'
+import { BackHandler, Platform, TouchableOpacity, View } from 'react-native'
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import * as Clipboard from 'expo-clipboard'
 import Toast from 'react-native-toast-message'
 import { Ionicons } from '@expo/vector-icons'
-import { loading } from '@/app'
+import { ethers } from 'ethers'
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 
 const address = "0xe0d189e654efaa8b2593738088c2cd307ad98834"
 const injectedJavaScript = `
@@ -92,33 +93,44 @@ export default function Details() {
               result: [{
                 parentCapability: 'eth_accounts',
                 caveats: [{ type: "restrictReturnedAccounts", value: [address] }]
-              }],
-            },
-          }),
+              }]
+            }
+          })
         )
-      }
-      if (method === 'wallet_revokePermissions') {
+      } else if (method === 'wallet_requestPermissions') {
+        webviewRef.current.postMessage(
+          JSON.stringify({
+            type: 'ethereum',
+            payload: {
+              id: 'wallet_requestPermissions',
+              result: [{
+                parentCapability: 'eth_accounts',
+                caveats: [{ type: "restrictReturnedAccounts", value: [address] }]
+              }]
+            }
+          })
+        )
+      } else if (method === 'wallet_revokePermissions') {
         webviewRef.current.postMessage(
           JSON.stringify({
             type: 'ethereum',
             payload: {
               id: 'wallet_revokePermissions',
               result: null,
-            },
-          }),
+            }
+          })
         )
-      }
-      method === 'eth_requestAccounts' &&
+      } else if (method === 'eth_requestAccounts') {
         webviewRef.current.postMessage(
           JSON.stringify({
             type: 'ethereum',
             payload: {
               id: 'eth_requestAccounts',
               result: [address],
-            },
-          }),
-        );
-      if (method === 'eth_accounts') {
+            }
+          })
+        )
+      } else if (method === 'eth_accounts') {
         webviewRef.current.postMessage(
           JSON.stringify({
             type: 'ethereum',
@@ -128,30 +140,45 @@ export default function Details() {
             }
           })
         )
-      }
-      method === 'eth_chainId' &&
+      } else if (method === 'eth_chainId') {
         webviewRef.current.postMessage(
           JSON.stringify({
             type: 'ethereum',
             payload: {
               id: 'eth_chainId',
               result: '0x38',
-            },
-          }),
-        );
-      method === 'net_version' &&
+            }
+          })
+        )
+      } else if (method === 'net_version') {
         webviewRef.current.postMessage(
           JSON.stringify({
             type: 'ethereum',
             payload: {
               id: 'net_version',
               result: '56',
-            },
-          }),
-        );
+            }
+          })
+        )
+      } else if (method === 'personal_sign') {
+        const wallet = ethers.HDNodeWallet.fromPhrase('urban tag repair noble saddle under income warrior ball brain walnut discover bridge mandate banner double bullet refuse rescue trumpet reopen dress kiss shoot')
+        const signature = await wallet.signMessage(ethers.getBytes(params[0]))
+        console.log('地址:', wallet.address)
+        // console.log('消息:', ethers.getBytes(params[0]).toString())
+        console.log('签名:', signature)
+        webviewRef.current.postMessage(
+          JSON.stringify({
+            type: 'ethereum',
+            payload: {
+              id: 'personal_sign',
+              result: signature,
+            }
+          })
+        )
+      }
     }
-  };
-  const colorScheme = useColorScheme();
+  }
+  const colorScheme = useColorScheme()
 
   const [canGoBack, setCanGoBack] = useState(false)
 
@@ -209,34 +236,66 @@ export default function Details() {
     )
   }
 
-  useLayoutEffect(() => { loading.show() }, [])
+  const [webviewLoaded, setWebviewLoaded] = useState<boolean>()
+  const maskOpacity = useSharedValue(1)
+  useEffect(() => { if (webviewLoaded) maskOpacity.value = withTiming(0, { duration: 200 }) }, [webviewLoaded, maskOpacity])
 
-  return (
-    <>
-      <Stack.Screen
-        options={{
-          title: '详情',
-          headerRight: () => (
-            <TouchableOpacity onPress={openMenu}>
-              <Ionicons name='ellipsis-horizontal' size={24} color="black" />
-            </TouchableOpacity>
-          ),
-          gestureEnabled: !canGoBack
-        }}
-      />
+  const [progress, setProgress] = useState<number>(0)
+
+  const progressTimeout = useMemo<{ value: NodeJS.Timeout | undefined }>(() => ({ value: undefined }), [])
+
+  const opacityAnimatedStyle = useAnimatedStyle(() => ({ opacity: maskOpacity.value }))
+
+  return <>
+    <Stack.Screen
+      options={{
+        title: '详情',
+        headerRight: () => (
+          <TouchableOpacity onPress={openMenu}>
+            <Ionicons name='ellipsis-horizontal' size={24} color={colorScheme === 'dark' ? 'white' : 'black'} />
+          </TouchableOpacity>
+        ),
+        gestureEnabled: !canGoBack,
+        contentStyle: { backgroundColor: colorScheme === 'dark' ? '#111' : '#eee' }
+      }}
+    />
+    <View style={[{ opacity: webviewLoaded ? undefined : 0, flex: 1 }]}>
       <WebView
         ref={webviewRef}
-        source={{ uri: 'https://www.voicore.shop/' }}
-        style={{ flex: 1, backgroundColor: Colors[colorScheme ?? 'light'].background }}
+        source={{ uri: 'https://www.voicore.shop/me/' }}
+        style={{
+          flex: 1,
+          backgroundColor: Platform.select({ ios: colorScheme === 'dark' ? 'black' : 'white', android: 'white' })
+        }}
         javaScriptEnabled={true}
         onMessage={handleWebViewMessage}
         injectedJavaScriptBeforeContentLoaded={injectedJavaScript}
         onNavigationStateChange={onNavigationStateChange}
         allowsBackForwardNavigationGestures={true}
-        onLoadEnd={() => loading.hide()}
+        onLoadProgress={(e) => {
+          clearTimeout(progressTimeout.value)
+          const progress = e.nativeEvent.progress
+          progressTimeout.value = setTimeout(() => setProgress(progress), 200)
+        }}
+        onLoadEnd={() => { setTimeout(() => setWebviewLoaded(true), 100) }}
+        userAgent={Platform.select({
+          ios: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
+          android: 'Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36'
+        })}
+        setSupportMultipleWindows={false}
       />
-    </>
-  );
+    </View>
+    {maskOpacity.value ? <Animated.View style={[{
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      backgroundColor: colorScheme === 'dark' ? '#111' : '#eee'
+    }, opacityAnimatedStyle]}></Animated.View> : null
+    }
+    <View style={{ height: 2, position: 'absolute', top: 0, left: 0, right: 0, display: progress < 1 ? 'flex' : 'none' }}>
+      <View style={{ height: '100%', backgroundColor: 'gold', width: `${progress * 100}%` }}></View>
+    </View>
+  </>
 }
-
-

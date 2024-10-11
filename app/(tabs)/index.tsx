@@ -1,10 +1,10 @@
-import { Image, StyleSheet, Platform, Button } from 'react-native';
+import { Image, StyleSheet, Platform, TouchableOpacity, Text } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { router } from 'expo-router';
+import { Link } from 'expo-router';
 
 export default function HomeScreen() {
   return (
@@ -23,10 +23,13 @@ export default function HomeScreen() {
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedView>
-          <Button
-            title="DApp 浏览器"
-            onPress={() => router.push('/details')}
-          />
+          <Link href='/details' asChild style={{ borderRadius: 100, overflow: 'hidden' }}>
+            <TouchableOpacity activeOpacity={0.618}>
+              <Text style={{
+                color: 'white', textAlign: 'center', lineHeight: 35.776, backgroundColor: '#0081f1'
+              }}>DAPP 浏览器</Text>
+            </TouchableOpacity>
+          </Link>
         </ThemedView>
         <ThemedText>
           Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
@@ -60,10 +63,13 @@ export default function HomeScreen() {
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedView>
-          <Button
-            title="DApp 浏览器"
-            onPress={() => router.push('/details')}
-          />
+          <Link href='/details' asChild style={{ borderRadius: 100, overflow: 'hidden' }}>
+            <TouchableOpacity activeOpacity={0.618}>
+              <Text style={{
+                color: 'white', textAlign: 'center', lineHeight: 35.776, backgroundColor: '#0081f1'
+              }}>DAPP 浏览器</Text>
+            </TouchableOpacity>
+          </Link>
         </ThemedView>
         <ThemedText>
           Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.

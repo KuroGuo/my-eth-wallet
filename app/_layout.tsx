@@ -8,9 +8,10 @@ import 'react-native-reanimated'
 import { useColorScheme } from '@/hooks/useColorScheme'
 import Constants from 'expo-constants'
 import { hide, isVisible, useHideAnimation } from 'react-native-bootsplash'
-import { Ionicons } from '@expo/vector-icons';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 // import BootSplash from 'react-native-bootsplash'
+import Toast from 'react-native-toast-message'
+import Loading from '@/components/Loading'
 
 // // Prevent the splash screen from auto-hiding before asset loading is complete.
 // SplashScreen.preventAutoHideAsync();
@@ -56,6 +57,8 @@ export default function RootLayout() {
           <Stack.Screen name="+not-found" />
         </Stack>
       </ActionSheetProvider>
+      <Loading />
+      <Toast visibilityTime={2000} />
     </ThemeProvider>
   )
 }

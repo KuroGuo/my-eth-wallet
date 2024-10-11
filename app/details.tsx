@@ -1,11 +1,14 @@
 import { Stack } from 'expo-router'
 import { WebView, WebViewNavigation } from 'react-native-webview'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme'
-import { BackHandler, Button, View } from 'react-native'
+import { BackHandler, TouchableOpacity } from 'react-native'
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import * as Clipboard from 'expo-clipboard'
+import Toast from 'react-native-toast-message'
+import { Ionicons } from '@expo/vector-icons'
+import { loading } from '@/app'
 
 const address = "0xe0d189e654efaa8b2593738088c2cd307ad98834"
 const injectedJavaScript = `
@@ -76,9 +79,9 @@ export default function Details() {
     * 根据window.ReactNativeWebView.postMessage传递的不同参数，返回对应的结果
     */
     const { data } = event.nativeEvent;
-    const { type, payload = {} } = JSON.parse(data) || {};
+    const { payload = {} } = JSON.parse(data) || {};
     const { method, params } = payload;
-    console.log('method: ', method, params);
+    console.log('method: ', method, params)
     if (webviewRef.current) {
       if (method === 'wallet_requestPermissions') {
         webviewRef.current.postMessage(
@@ -152,18 +155,17 @@ export default function Details() {
 
   const [canGoBack, setCanGoBack] = useState(false)
 
-  const handleBackPress = () => {
-    if (canGoBack && webviewRef.current) {
-      webviewRef.current.goBack()
-      return true // 防止默认的返回行为
-    }
-    return false // 允许默认的返回行为
-  }
-
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', handleBackPress)
+    const handler = () => {
+      if (canGoBack && webviewRef.current) {
+        webviewRef.current.goBack()
+        return true // 防止默认的返回行为
+      }
+      return false // 允许默认的返回行为
+    }
+    BackHandler.addEventListener('hardwareBackPress', handler)
     return () => {
-      BackHandler.removeEventListener('hardwareBackPress', handleBackPress)
+      BackHandler.removeEventListener('hardwareBackPress', handler)
     }
   }, [canGoBack])
 
@@ -191,7 +193,12 @@ export default function Details() {
             break;
           case 1:
             // 处理选项2
-            Clipboard.setStringAsync('https://www.voicore.shop/');
+            Clipboard.setStringAsync('https://www.voicore.shop/')
+            Toast.show({
+              type: 'success',
+              text1: '已复制链接！',
+              position: 'bottom'
+            })
             break;
           case 2:
             // 处理选项3
@@ -202,13 +209,18 @@ export default function Details() {
     )
   }
 
+  useLayoutEffect(() => { loading.show() }, [])
+
   return (
     <>
       <Stack.Screen
         options={{
-          title: '详情', headerRight: () => {
-            return (<Button title='菜单' onPress={() => { openMenu() }} />)
-          },
+          title: '详情',
+          headerRight: () => (
+            <TouchableOpacity onPress={openMenu}>
+              <Ionicons name='ellipsis-horizontal' size={24} color="black" />
+            </TouchableOpacity>
+          ),
           gestureEnabled: !canGoBack
         }}
       />
@@ -221,6 +233,7 @@ export default function Details() {
         injectedJavaScriptBeforeContentLoaded={injectedJavaScript}
         onNavigationStateChange={onNavigationStateChange}
         allowsBackForwardNavigationGestures={true}
+        onLoadEnd={() => loading.hide()}
       />
     </>
   );

@@ -1,7 +1,6 @@
 import { Stack } from 'expo-router'
 import { WebView, WebViewNavigation } from 'react-native-webview'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme'
 import { BackHandler, Platform, TouchableOpacity, View } from 'react-native'
 import { useActionSheet } from '@expo/react-native-action-sheet';
@@ -210,7 +209,7 @@ export default function Details() {
       {
         options,
         cancelButtonIndex,
-        textStyle: { flex: 1, textAlign: 'center' }
+        textStyle: { flex: 1, textAlign: 'center', color: '#010101' }
       },
       (selectedIndex) => {
         switch (selectedIndex) {
@@ -224,7 +223,8 @@ export default function Details() {
             Toast.show({
               type: 'success',
               text1: '已复制链接！',
-              position: 'bottom'
+              position: 'bottom',
+              text1Style: { color: '#010101' }
             })
             break;
           case 2:
@@ -237,14 +237,12 @@ export default function Details() {
   }
 
   const [webviewLoaded, setWebviewLoaded] = useState<boolean>()
-  const maskOpacity = useSharedValue(1)
-  useEffect(() => { if (webviewLoaded) maskOpacity.value = withTiming(0, { duration: 200 }) }, [webviewLoaded, maskOpacity])
+  const webviewOpacity = useSharedValue(0)
+  useEffect(() => { if (webviewLoaded) webviewOpacity.value = withTiming(1, { duration: 350 }) }, [webviewLoaded, webviewOpacity])
 
   const [progress, setProgress] = useState<number>(0)
 
   const progressTimeout = useMemo<{ value: NodeJS.Timeout | undefined }>(() => ({ value: undefined }), [])
-
-  const opacityAnimatedStyle = useAnimatedStyle(() => ({ opacity: maskOpacity.value }))
 
   return <>
     <Stack.Screen
@@ -259,41 +257,45 @@ export default function Details() {
         contentStyle: { backgroundColor: colorScheme === 'dark' ? '#111' : '#eee' }
       }}
     />
-    <View style={[{ opacity: webviewLoaded ? undefined : 0, flex: 1 }]}>
-      <WebView
-        ref={webviewRef}
-        source={{ uri: 'https://www.voicore.shop/me/' }}
-        style={{
-          flex: 1,
-          backgroundColor: Platform.select({ ios: colorScheme === 'dark' ? 'black' : 'white', android: 'white' })
-        }}
-        javaScriptEnabled={true}
-        onMessage={handleWebViewMessage}
-        injectedJavaScriptBeforeContentLoaded={injectedJavaScript}
-        onNavigationStateChange={onNavigationStateChange}
-        allowsBackForwardNavigationGestures={true}
-        onLoadProgress={(e) => {
-          clearTimeout(progressTimeout.value)
-          const progress = e.nativeEvent.progress
-          progressTimeout.value = setTimeout(() => setProgress(progress), 200)
-        }}
-        onLoadEnd={() => { setTimeout(() => setWebviewLoaded(true), 100) }}
-        userAgent={Platform.select({
-          ios: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
-          android: 'Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36'
-        })}
-        setSupportMultipleWindows={false}
-      />
-    </View>
-    {maskOpacity.value ? <Animated.View style={[{
+    {/* <Animated.View style={[
+      { flex: 1 },
+      useAnimatedStyle(() => ({ transform: [{ scale: webviewOpacity.value }] }))
+    ]}> */}
+    <WebView
+      ref={webviewRef}
+      source={{ uri: 'https://www.voicore.shop/me/' }}
+      style={{
+        flex: 1,
+        backgroundColor: Platform.select({ ios: colorScheme === 'dark' ? 'black' : 'white', android: 'white' })
+      }}
+      javaScriptEnabled={true}
+      onMessage={handleWebViewMessage}
+      injectedJavaScriptBeforeContentLoaded={injectedJavaScript}
+      onNavigationStateChange={onNavigationStateChange}
+      allowsBackForwardNavigationGestures={true}
+      onLoadProgress={(e) => {
+        clearTimeout(progressTimeout.value)
+        const progress = e.nativeEvent.progress
+        progressTimeout.value = setTimeout(() => setProgress(progress), 200)
+      }}
+      onLoadEnd={() => { setTimeout(() => setWebviewLoaded(true), 200) }}
+      userAgent={Platform.select({
+        ios: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
+        android: 'Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36'
+      })}
+      setSupportMultipleWindows={false}
+    />
+    {/* </Animated.View> */}
+    <Animated.View style={[{
       position: 'absolute',
       left: 0,
       right: 0,
       top: 0,
       bottom: 0,
       backgroundColor: colorScheme === 'dark' ? '#111' : '#eee'
-    }, opacityAnimatedStyle]}></Animated.View> : null
-    }
+    }, useAnimatedStyle(() => ({
+      opacity: 1 - webviewOpacity.value, display: 1 - webviewOpacity.value ? 'flex' : 'none'
+    }))]}></Animated.View>
     <View style={{ height: 2, position: 'absolute', top: 0, left: 0, right: 0, display: progress < 1 ? 'flex' : 'none' }}>
       <View style={{ height: '100%', backgroundColor: 'gold', width: `${progress * 100}%` }}></View>
     </View>

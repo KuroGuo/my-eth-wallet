@@ -2,5 +2,5 @@ import { ColorSchemeName, Platform, useColorScheme as _useColorScheme } from 're
 
 export function useColorScheme() {
   const colorScheme = _useColorScheme()
-  return Platform.select<ColorSchemeName>({ android: colorScheme, ios: colorScheme })
+  return Platform.select<ColorSchemeName>({ android: 'light', ios: colorScheme })
 }

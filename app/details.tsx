@@ -274,7 +274,7 @@ export default function Details() {
       style={{
         flex: 1,
         backgroundColor: Platform.select({ ios: colorScheme === 'dark' ? 'black' : 'white', android: 'white' }),
-        // display: pageTransitionEnded ? 'flex' : 'none'
+        display: pageTransitionEnded ? 'flex' : 'none'
       }}
       javaScriptEnabled={true}
       onMessage={handleWebViewMessage}
@@ -294,7 +294,7 @@ export default function Details() {
       setSupportMultipleWindows={false}
     />
     {/* </Animated.View> */}
-    {/* <Animated.View style={[{
+    <Animated.View style={[{
       position: 'absolute',
       left: 0,
       right: 0,
@@ -304,7 +304,7 @@ export default function Details() {
       pointerEvents: 'none'
     }, useAnimatedStyle(() => ({
       opacity: 1 - webviewOpacity.value, display: 1 - webviewOpacity.value ? 'flex' : 'none'
-    }))]}></Animated.View> */}
+    }))]}></Animated.View>
     <View style={{ height: 2, position: 'absolute', top: 0, left: 0, right: 0, display: progress < 1 ? 'flex' : 'none' }}>
       <View style={{ height: '100%', backgroundColor: 'gold', width: `${progress * 100}%` }}></View>
     </View>

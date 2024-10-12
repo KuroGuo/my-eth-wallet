@@ -8,7 +8,7 @@ import * as Clipboard from 'expo-clipboard'
 import Toast from 'react-native-toast-message'
 import { Ionicons } from '@expo/vector-icons'
 import { ethers } from 'ethers'
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import Animated, { useAnimatedStyle, useSharedValue, withTiming, withDelay } from 'react-native-reanimated'
 
 const address = "0xe0d189e654efaa8b2593738088c2cd307ad98834"
 const injectedJavaScript = `
@@ -236,9 +236,16 @@ export default function Details() {
     )
   }
 
+  const [pageTransitionEnded, setPageTransitionEnded] = useState<boolean>()
+  useEffect(() => {
+    const timeout = setTimeout(() => setPageTransitionEnded(true), 350)
+    return () => clearTimeout(timeout)
+  }, [])
   const [webviewLoaded, setWebviewLoaded] = useState<boolean>()
   const webviewOpacity = useSharedValue(0)
-  useEffect(() => { if (webviewLoaded) webviewOpacity.value = withTiming(1, { duration: 350 }) }, [webviewLoaded, webviewOpacity])
+  useEffect(() => {
+    if (pageTransitionEnded && webviewLoaded) webviewOpacity.value = withDelay(200, withTiming(1, { duration: 350 }))
+  }, [pageTransitionEnded, webviewLoaded, webviewOpacity])
 
   const [progress, setProgress] = useState<number>(0)
 
@@ -278,7 +285,7 @@ export default function Details() {
         const progress = e.nativeEvent.progress
         progressTimeout.value = setTimeout(() => setProgress(progress), 200)
       }}
-      onLoadEnd={() => { setTimeout(() => setWebviewLoaded(true), 200) }}
+      onLoadEnd={() => { setWebviewLoaded(true) }}
       userAgent={Platform.select({
         ios: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
         android: 'Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36'

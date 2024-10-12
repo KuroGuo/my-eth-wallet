@@ -1,5 +1,4 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
-import { useFonts } from 'expo-font'
 import { Stack } from 'expo-router'
 // import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react'
@@ -27,21 +26,12 @@ if (!isExpoGo) {
 }
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const colorScheme = useColorScheme()
 
   useEffect(() => {
-    if (loaded) {
-      // SplashScreen.hideAsync();
-      if (!isExpoGo) BootSplash.hide({ fade: true })
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
+    // SplashScreen.hideAsync();
+    if (!isExpoGo) BootSplash.hide({ fade: true })
+  }, [])
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>

@@ -1,10 +1,11 @@
-import { Image, StyleSheet, Platform, TouchableOpacity, Text } from 'react-native';
+import { Image, StyleSheet, Platform, TouchableOpacity, Text } from 'react-native'
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { Link } from 'expo-router';
+import { HelloWave } from '@/components/HelloWave'
+import ParallaxScrollView from '@/components/ParallaxScrollView'
+import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
+import { Link } from 'expo-router'
+import Animated from 'react-native-reanimated'
 
 export default function HomeScreen() {
   return (
@@ -16,6 +17,14 @@ export default function HomeScreen() {
           style={styles.reactLogo}
         />
       }>
+      <Link href='/image' asChild>
+        <TouchableOpacity activeOpacity={0.618}>
+          <Animated.Image
+            source={require('@/assets/images/icon.png')}
+            style={{ width: 200, height: 100 }}
+          />
+        </TouchableOpacity>
+      </Link>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">欢迎光临</ThemedText>
         <HelloWave />

@@ -6,6 +6,11 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "checkAutomatically": "ON_LOAD",
+      "url": "https://u.expo.dev/1f5d92fa-2727-4dbb-bd3e-9e0a181ad2cb"
+    },
     "ios": {
       "userInterfaceStyle": "automatic",
       "supportsTablet": true,
@@ -43,6 +48,9 @@
       "eas": {
         "projectId": "1f5d92fa-2727-4dbb-bd3e-9e0a181ad2cb"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }

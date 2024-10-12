@@ -273,7 +273,8 @@ export default function Details() {
       source={{ uri: 'https://www.voicore.shop/me/' }}
       style={{
         flex: 1,
-        backgroundColor: Platform.select({ ios: colorScheme === 'dark' ? 'black' : 'white', android: 'white' })
+        backgroundColor: Platform.select({ ios: colorScheme === 'dark' ? 'black' : 'white', android: 'white' }),
+        // display: pageTransitionEnded ? 'flex' : 'none'
       }}
       javaScriptEnabled={true}
       onMessage={handleWebViewMessage}
@@ -293,16 +294,17 @@ export default function Details() {
       setSupportMultipleWindows={false}
     />
     {/* </Animated.View> */}
-    <Animated.View style={[{
+    {/* <Animated.View style={[{
       position: 'absolute',
       left: 0,
       right: 0,
       top: 0,
       bottom: 0,
-      backgroundColor: colorScheme === 'dark' ? '#111' : '#eee'
+      backgroundColor: colorScheme === 'dark' ? '#111' : '#eee',
+      pointerEvents: 'none'
     }, useAnimatedStyle(() => ({
       opacity: 1 - webviewOpacity.value, display: 1 - webviewOpacity.value ? 'flex' : 'none'
-    }))]}></Animated.View>
+    }))]}></Animated.View> */}
     <View style={{ height: 2, position: 'absolute', top: 0, left: 0, right: 0, display: progress < 1 ? 'flex' : 'none' }}>
       <View style={{ height: '100%', backgroundColor: 'gold', width: `${progress * 100}%` }}></View>
     </View>

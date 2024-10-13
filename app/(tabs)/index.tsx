@@ -108,19 +108,6 @@ export default function HomeScreen() {
         />
       }>
 
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">🌐 DAPP 浏览器</ThemedText>
-      </ThemedView>
-      <ThemedView>
-        <Link href='/details' asChild style={{ borderRadius: 100, overflow: 'hidden' }}>
-          <TouchableOpacity activeOpacity={0.618}>
-            <ThemedText style={{
-              color: 'white', textAlign: 'center', lineHeight: 16 * 2.618, backgroundColor: '#0081f1'
-            }}>打开 DAPP 浏览器</ThemedText>
-          </TouchableOpacity>
-        </Link>
-      </ThemedView>
-
       <ThemedView style={[styles.titleContainer]}>
         <ThemedText type="title">💬 聊天</ThemedText>
       </ThemedView>
@@ -168,6 +155,19 @@ export default function HomeScreen() {
         <ThemedView>
           {messageList?.map(msg => <ThemedText key={msg.ID}>{msg.payload.text}</ThemedText>)}
         </ThemedView>
+      </ThemedView>
+
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title">🌐 DAPP 浏览器</ThemedText>
+      </ThemedView>
+      <ThemedView>
+        <Link href='/details' asChild style={{ borderRadius: 100, overflow: 'hidden' }}>
+          <TouchableOpacity activeOpacity={0.618}>
+            <ThemedText style={{
+              color: 'white', textAlign: 'center', lineHeight: 16 * 2.618, backgroundColor: '#0081f1'
+            }}>打开 DAPP 浏览器</ThemedText>
+          </TouchableOpacity>
+        </Link>
       </ThemedView>
 
       <ThemedView style={styles.titleContainer}>

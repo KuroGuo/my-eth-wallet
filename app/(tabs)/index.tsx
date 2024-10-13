@@ -29,7 +29,7 @@ export default function HomeScreen() {
         <ThemedText type="title">欢迎光临</ThemedText>
         <HelloWave />
       </ThemedView>
-      <ThemedText>v 0.0.1</ThemedText>
+      <ThemedText>v 0.0.2</ThemedText>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedView>

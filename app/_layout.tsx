@@ -5,17 +5,15 @@ import { useEffect } from 'react'
 import 'react-native-reanimated'
 
 import { useColorScheme } from '@/hooks/useColorScheme'
-import Constants from 'expo-constants'
 import { hide, isVisible, useHideAnimation } from 'react-native-bootsplash'
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 // import BootSplash from 'react-native-bootsplash'
 import Toast from 'react-native-toast-message'
 import Loading from '@/components/Loading'
+import { isExpoGo } from '@/app'
 
 // // Prevent the splash screen from auto-hiding before asset loading is complete.
 // SplashScreen.preventAutoHideAsync();
-
-const isExpoGo = Constants.appOwnership === 'expo'
 
 if (!isExpoGo) {
   var BootSplash: {

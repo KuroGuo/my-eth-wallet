@@ -151,7 +151,7 @@ export default function HomeScreen() {
           flexDirection: 'row', gap: 9.888, marginBottom: messageList?.length ? 9.888 : undefined,
         }}>
           <TextInput ref={textInputRef} placeholder='输入消息' style={{
-            borderWidth: 1,
+            borderWidth: 2,
             paddingVertical: 6.11,
             paddingHorizontal: 16,
             borderRadius: 100,

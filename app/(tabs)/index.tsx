@@ -90,14 +90,24 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </Link>
       </ThemedView>
-      <Link href='/image' asChild>
-        <TouchableOpacity activeOpacity={0.618}>
-          <Image
-            src='https://data.debox.pro/static/2024/08/9/6khmmmou/7a8dafff3ba8f0f0e2dc6e90f6632c10.png'
-            style={{ width: 200, height: 100 }}
-          />
-        </TouchableOpacity>
-      </Link>
+      <View style={{ flexDirection: 'row' }}>
+        <Link href='/image?id=0' asChild style={{ flex: 1 }}>
+          <TouchableOpacity activeOpacity={0.618}>
+            <Image
+              src='https://data.debox.pro/static/2024/08/9/6khmmmou/7a8dafff3ba8f0f0e2dc6e90f6632c10.png'
+              style={{ height: 100 }}
+            />
+          </TouchableOpacity>
+        </Link>
+        <Link href='/image?id=1' asChild style={{ flex: 1 }}>
+          <TouchableOpacity activeOpacity={0.618}>
+            <Image
+              src='https://data.debox.pro/static/2023/12/21/oo0epp62/debox_christmas2023_1703141029261.png'
+              style={{ height: 100 }}
+            />
+          </TouchableOpacity>
+        </Link>
+      </View>
       <ThemedView>
         <View style={{ flexDirection: 'row', marginBottom: 16, gap: 9.888 }}>
           {users.map(user => <TouchableOpacity key={user.userID} style={[

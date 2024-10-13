@@ -126,6 +126,7 @@ export default function HomeScreen() {
           paddingVertical: 6.11,
           paddingHorizontal: 9.888
         }} onEndEditing={e => {
+          if (!chat.isReady()) return
           const message = chat.createTextMessage({
             to: users.find(user => user.userID !== currentUser.userID)!.userID,
             conversationType: TencentCloudChat.TYPES.CONV_C2C,
@@ -140,8 +141,7 @@ export default function HomeScreen() {
         {messageList?.map(msg => <ThemedText key={msg.ID}>{msg.payload.text}</ThemedText>)}
       </ThemedView>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">欢迎光临</ThemedText>
-        <HelloWave />
+        <ThemedText type="title">欢迎光临 👋</ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>

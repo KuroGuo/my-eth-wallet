@@ -1,17 +1,7 @@
 import { Stack, router } from "expo-router"
 import Gallery from "react-native-awesome-gallery"
-import { useEffect } from "react"
-import { isExpoGo } from "@/app"
-import { Platform } from "react-native"
-
-if (!isExpoGo && Platform.OS === 'android') var { enterFullScreen, exitFullScreen } = require('@untitled/expo-full-screen')
 
 export default function ImageScreen() {
-  useEffect(() => {
-    if (!enterFullScreen) return
-    enterFullScreen()
-    return () => { exitFullScreen() }
-  }, [])
   return <>
     <Stack.Screen options={{
       animation: 'fade',

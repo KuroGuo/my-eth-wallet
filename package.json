@@ -21,7 +21,6 @@
     "@expo/react-native-action-sheet": "^4.1.0",
     "@expo/vector-icons": "^14.0.2",
     "@react-navigation/native": "^6.0.2",
-    "@untitled/expo-full-screen": "github:Luluno01/expo-full-screen",
     "ethers": "^6.13.3",
     "expo": "~51.0.28",
     "expo-clipboard": "~6.0.3",

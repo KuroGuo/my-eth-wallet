@@ -13,8 +13,11 @@ export default function ImageScreen() {
     }} />
     <Gallery
       data={[
-        'https://data.debox.pro/static/2024/08/9/6khmmmou/7a8dafff3ba8f0f0e2dc6e90f6632c10.png',
-        'https://data.debox.pro/static/2023/12/21/oo0epp62/debox_christmas2023_1703141029261.png'
+        'https://data.debox.pro/im/image/2024/10/13/6khmmmou/96aa8ba44cf7b8a858ae4e2927593904.jpg',
+        'https://data.debox.pro/static/2023/03/16/120329_1678973015113.jpg',
+        'https://data.debox.pro/static/2023/12/21/oo0epp62/debox_christmas2023_1703141029261.png',
+        'https://data.debox.pro/static/2023/07/4/fxi5qm2f/442056db2bed93eea27464b2c324f5b7.jpg',
+        'https://data.debox.pro/static/2022/08/11/102785_-1945380697.jpeg'
       ]}
       doubleTapInterval={200}
       onTap={router.back}

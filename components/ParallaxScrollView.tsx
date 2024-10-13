@@ -45,7 +45,7 @@ export default function ParallaxScrollView({
 
   return (
     <ThemedView style={styles.container}>
-      <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
+      <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16} keyboardShouldPersistTaps='handled'>
         {!!headerBackgroundColor && !!headerImage && <Animated.View
           style={[
             styles.header,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 32,
+    padding: 16 / 0.618,
     gap: 16,
     overflow: 'hidden'
   }

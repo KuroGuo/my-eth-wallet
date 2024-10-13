@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform, TouchableOpacity, TextInput, Button } from 'react-native'
+import { Image, StyleSheet, Platform, TouchableOpacity, TextInput, Button, Pressable } from 'react-native'
 
 import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'
@@ -95,25 +95,28 @@ export default function HomeScreen() {
         </Link>
       </ThemedView>
 
-      <ThemedView style={[styles.titleContainer, { marginTop: 0 }]}>
+      <ThemedView style={[styles.titleContainer]}>
         <ThemedText type="title">💬</ThemedText>
         <ThemedText type="title">聊天</ThemedText>
       </ThemedView>
       <ThemedView>
         <ThemedView style={{ flexDirection: 'row', marginBottom: 16, gap: 9.888 }}>
           <ThemedView style={{ flexDirection: 'row', gap: 6.11, flex: 1 }}>
-            {users.map(user => <TouchableOpacity key={user.userID} style={[
-              { flex: 1 },
+            {users.map(user => <ThemedView style={[
+              { borderRadius: 100, flex: 1, overflow: 'hidden' },
               user.userID === currentUser.userID && [{
-                backgroundColor: '#0081f1',
-                borderRadius: 100
+                backgroundColor: '#0081f1'
               }]
-            ]} activeOpacity={0.618} onPress={() => setCurrentUser(user)}>
-              <ThemedText style={[
-                { textAlign: 'center', lineHeight: 16 * 2.618 },
-                user.userID === currentUser.userID && [{ color: 'white' }]
-              ]}>{user.userID}</ThemedText>
-            </TouchableOpacity>)}
+            ]}>
+              <Pressable android_ripple={{
+                color: 'rgba(255, 255, 255, .382)'
+              }} key={user.userID} style={{ flex: 1 }} onPress={() => setCurrentUser(user)}>
+                <ThemedText style={[
+                  { textAlign: 'center', lineHeight: 16 * 2.618 },
+                  user.userID === currentUser.userID && [{ color: 'white' }]
+                ]}>{user.userID}</ThemedText>
+              </Pressable>
+            </ThemedView>)}
           </ThemedView>
           <ThemedView style={{ justifyContent: 'center' }}>
             <Button onPress={e => { if (!chat.isReady()) chat.login(currentUser) }} title='　登录　' />

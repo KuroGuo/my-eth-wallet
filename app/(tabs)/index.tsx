@@ -17,14 +17,6 @@ export default function HomeScreen() {
           style={styles.reactLogo}
         />
       }>
-      <Link href='/image' asChild>
-        <TouchableOpacity activeOpacity={0.618}>
-          <Animated.Image
-            source={require('@/assets/images/icon.png')}
-            style={{ width: 200, height: 100 }}
-          />
-        </TouchableOpacity>
-      </Link>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">欢迎光临</ThemedText>
         <HelloWave />
@@ -66,6 +58,14 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
       </ThemedView>
+      <Link href='/image' asChild>
+        <TouchableOpacity activeOpacity={0.618}>
+          <Animated.Image
+            src='https://data.debox.pro/static/2024/08/9/6khmmmou/7a8dafff3ba8f0f0e2dc6e90f6632c10.png'
+            style={{ width: 200, height: 100 }}
+          />
+        </TouchableOpacity>
+      </Link>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">欢迎光临</ThemedText>
         <HelloWave />

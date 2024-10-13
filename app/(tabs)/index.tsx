@@ -186,7 +186,7 @@ export default function HomeScreen() {
         <Link href='/image?id=2' asChild style={{ minWidth: '45%', flex: 1 }}>
           <TouchableOpacity activeOpacity={0.618}>
             <Image
-              src='https://data.debox.pro/static/2023/12/21/oo0epp62/debox_christmas2023_1703141029261.png'
+              src='https://data.debox.pro/im/image/2024/10/14/6khmmmou/2f789606d4940ead7e99eabe60d6bb686645b6f2fcaf8fb4be906d63306d2c35.jpg'
               style={{ aspectRatio: 1 }}
             />
           </TouchableOpacity>

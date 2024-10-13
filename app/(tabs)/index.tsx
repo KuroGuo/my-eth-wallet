@@ -170,7 +170,7 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
       </ThemedView>
-      <ThemedText>v 0.0.2</ThemedText>
+      <ThemedText>v 0.0.3</ThemedText>
     </ParallaxScrollView>
   );
 }

@@ -1,5 +1,5 @@
-import { Image, StyleSheet, TouchableOpacity, TextInput, Button, Pressable } from 'react-native'
-
+import { StyleSheet, TouchableOpacity, TextInput, Button, Pressable } from 'react-native'
+import { Image } from 'expo-image'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
@@ -170,7 +170,7 @@ export default function HomeScreen() {
         <Link href='/image?id=0' asChild style={{ minWidth: '100%', flex: 1 }}>
           <TouchableOpacity activeOpacity={0.618}>
             <Image
-              src='https://data.debox.pro/im/image/2024/10/13/6khmmmou/96aa8ba44cf7b8a858ae4e2927593904.jpg'
+              source='https://data.debox.pro/im/image/2024/10/13/6khmmmou/96aa8ba44cf7b8a858ae4e2927593904.jpg'
               style={{ aspectRatio: 1 }}
             />
           </TouchableOpacity>
@@ -178,7 +178,7 @@ export default function HomeScreen() {
         <Link href='/image?id=1' asChild style={{ minWidth: '45%', flex: 1 }}>
           <TouchableOpacity activeOpacity={0.618}>
             <Image
-              src='https://data.debox.pro/static/2023/03/16/120329_1678973015113.jpg'
+              source='https://data.debox.pro/static/2023/03/16/120329_1678973015113.jpg'
               style={{ aspectRatio: 1 }}
             />
           </TouchableOpacity>
@@ -186,7 +186,7 @@ export default function HomeScreen() {
         <Link href='/image?id=2' asChild style={{ minWidth: '45%', flex: 1 }}>
           <TouchableOpacity activeOpacity={0.618}>
             <Image
-              src='https://data.debox.pro/im/image/2024/10/14/6khmmmou/2f789606d4940ead7e99eabe60d6bb686645b6f2fcaf8fb4be906d63306d2c35.jpg'
+              source='https://data.debox.pro/im/image/2024/10/14/6khmmmou/2f789606d4940ead7e99eabe60d6bb686645b6f2fcaf8fb4be906d63306d2c35.jpg'
               style={{ aspectRatio: 1 }}
             />
           </TouchableOpacity>
@@ -194,7 +194,7 @@ export default function HomeScreen() {
         <Link href='/image?id=3' asChild style={{ minWidth: '45%', flex: 1 }}>
           <TouchableOpacity activeOpacity={0.618}>
             <Image
-              src='https://data.debox.pro/static/2023/07/4/fxi5qm2f/442056db2bed93eea27464b2c324f5b7.jpg'
+              source='https://data.debox.pro/static/2023/07/4/fxi5qm2f/442056db2bed93eea27464b2c324f5b7.jpg'
               style={{ aspectRatio: 1 }}
             />
           </TouchableOpacity>
@@ -202,7 +202,7 @@ export default function HomeScreen() {
         <Link href='/image?id=4' asChild style={{ minWidth: '45%', flex: 1 }}>
           <TouchableOpacity activeOpacity={0.618}>
             <Image
-              src='https://data.debox.pro/static/2022/08/11/102785_-1945380697.jpeg'
+              source='https://data.debox.pro/static/2022/08/11/102785_-1945380697.jpeg'
               style={{ aspectRatio: 1 }}
             />
           </TouchableOpacity>

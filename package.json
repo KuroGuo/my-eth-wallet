@@ -47,7 +47,8 @@
     "react-native-toast-message": "^2.2.1",
     "react-native-web": "~0.19.10",
     "react-native-webview": "13.8.6",
-    "tim-upload-plugin": "^1.4.1"
+    "tim-upload-plugin": "^1.4.1",
+    "expo-image": "~1.13.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

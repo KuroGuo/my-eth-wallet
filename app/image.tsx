@@ -1,6 +1,7 @@
 import { Stack, router } from "expo-router"
 import Gallery from "react-native-awesome-gallery"
 import { useLocalSearchParams } from 'expo-router'
+import { Image } from 'expo-image'
 
 export default function ImageScreen() {
   const params = useLocalSearchParams()
@@ -22,7 +23,14 @@ export default function ImageScreen() {
       doubleTapInterval={200}
       onTap={router.back}
       initialIndex={+params.id}
-      style={{ overflow: 'hidden' }}
+      renderItem={({ item, index, setImageDimensions }: { item: string, index: number, setImageDimensions: Function }) => {
+        console.log('renderItem', item)
+        return <Image
+          source={item}
+          contentFit='contain'
+          style={{ flex: 1 }}
+        />
+      }}
     />
   </>
 }

@@ -8,6 +8,7 @@ import chat from '@/chat'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import TencentCloudChat from '@tencentcloud/chat'
 import Toast from 'react-native-toast-message'
+import { useColorScheme } from '@/hooks/useColorScheme'
 
 const blurhash = '00RW0b'
 
@@ -95,6 +96,8 @@ export default function HomeScreen() {
     textInputRef.current?.clear()
   }
 
+  const colorSchame = useColorScheme()
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -147,12 +150,14 @@ export default function HomeScreen() {
         <ThemedView style={{
           flexDirection: 'row', gap: 9.888, marginBottom: messageList?.length ? 9.888 : undefined,
         }}>
-          <TextInput ref={textInputRef} placeholder='发送消息' style={{
+          <TextInput ref={textInputRef} placeholder='输入消息' style={{
             borderWidth: 1,
             paddingVertical: 6.11,
             paddingHorizontal: 16,
             borderRadius: 100,
-            flex: 1
+            flex: 1,
+            borderColor: colorSchame === 'dark' ? 'white' : 'black',
+            color: colorSchame === 'dark' ? 'white' : 'black'
           }} onChangeText={text => { setTextInputValue(text) }} onSubmitEditing={e => {
             sendMessage(e.nativeEvent.text)
           }} cursorColor='black' />

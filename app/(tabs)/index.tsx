@@ -25,8 +25,6 @@ export default function HomeScreen() {
   const [currentUser, setCurrentUser] = useState(users[0])
 
   useEffect(() => {
-    const isReady = chat.isReady()
-
     const onMessageReceived = (e: any) => {
       // event.data - 存储 Message 对象的数组 - [Message]
       // Message 数据结构详情请参考 https://web.sdk.qcloud.com/im/doc/v3/zh-cn/Message.html
@@ -80,22 +78,70 @@ export default function HomeScreen() {
           style={styles.reactLogo}
         />
       }>
+      <ThemedView>
+        <Link href='/details' asChild style={{ borderRadius: 100, overflow: 'hidden' }}>
+          <TouchableOpacity activeOpacity={0.618}>
+            <Text style={{
+              color: 'white', textAlign: 'center', lineHeight: 35.776, backgroundColor: '#0081f1'
+            }}>DAPP 浏览器</Text>
+          </TouchableOpacity>
+        </Link>
+      </ThemedView>
+      <Link href='/image' asChild>
+        <TouchableOpacity activeOpacity={0.618}>
+          <Image
+            src='https://data.debox.pro/static/2024/08/9/6khmmmou/7a8dafff3ba8f0f0e2dc6e90f6632c10.png'
+            style={{ width: 200, height: 100 }}
+          />
+        </TouchableOpacity>
+      </Link>
+      <ThemedView>
+        <View style={{ flexDirection: 'row', marginBottom: 16, gap: 9.888 }}>
+          {users.map(user => <TouchableOpacity key={user.userID} style={[
+            {
+              paddingVertical: 9.888,
+              paddingHorizontal: 16,
+              flex: 1
+            },
+            user.userID === currentUser.userID && [{
+              backgroundColor: '#0081f1',
+              borderRadius: 100
+            }]
+          ]} activeOpacity={0.618} onPress={() => setCurrentUser(user)}>
+            <Text style={[
+              { textAlign: 'center' },
+              user.userID === currentUser.userID && [{ color: 'white' }]
+            ]}>{user.userID}</Text>
+          </TouchableOpacity>)}
+          <View style={{ justifyContent: 'center' }}>
+            <Button onPress={e => { if (!chat.isReady()) chat.login(currentUser) }} title='登录' />
+          </View>
+        </View>
+        <TextInput ref={textInputRef} placeholder='发送消息' style={{
+          borderWidth: 2,
+          marginBottom: 9.888,
+          paddingVertical: 6.11,
+          paddingHorizontal: 9.888
+        }} onEndEditing={e => {
+          const message = chat.createTextMessage({
+            to: users.find(user => user.userID !== currentUser.userID)!.userID,
+            conversationType: TencentCloudChat.TYPES.CONV_C2C,
+            payload: { text: e.nativeEvent.text }
+          })
+          chat.sendMessage(message).then(imResponse => {
+            console.log('发送成功', imResponse);
+          })
+          setMessageList(messageList => [message, ...messageList || []])
+          textInputRef.current?.clear()
+        }}></TextInput>
+        {messageList?.map(msg => <ThemedText key={msg.ID}>{msg.payload.text}</ThemedText>)}
+      </ThemedView>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">欢迎光临</ThemedText>
         <HelloWave />
       </ThemedView>
-      <ThemedText>v 0.0.2</ThemedText>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedView>
-          <Link href='/details' asChild style={{ borderRadius: 100, overflow: 'hidden' }}>
-            <TouchableOpacity activeOpacity={0.618}>
-              <Text style={{
-                color: 'white', textAlign: 'center', lineHeight: 35.776, backgroundColor: '#0081f1'
-              }}>DAPP 浏览器</Text>
-            </TouchableOpacity>
-          </Link>
-        </ThemedView>
         <ThemedText>
           Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
           Press{' '}
@@ -121,50 +167,7 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
       </ThemedView>
-      <Link href='/image' asChild>
-        <TouchableOpacity activeOpacity={0.618}>
-          <Image
-            src='https://data.debox.pro/static/2024/08/9/6khmmmou/7a8dafff3ba8f0f0e2dc6e90f6632c10.png'
-            style={{ width: 200, height: 100 }}
-          />
-        </TouchableOpacity>
-      </Link>
-      <ThemedView>
-        <View style={{ flexDirection: 'row', marginBottom: 16 }}>
-          {users.map(user => <TouchableOpacity key={user.userID} style={[
-            {
-              paddingVertical: 9.888,
-              paddingHorizontal: 16,
-              flex: 1
-            },
-            user.userID === currentUser.userID && [{ backgroundColor: '#0081f1' }]
-          ]} activeOpacity={0.618} onPress={() => setCurrentUser(user)}>
-            <Text style={[
-              { textAlign: 'center' },
-              user.userID === currentUser.userID && [{ color: 'white' }]
-            ]}>{user.userID}</Text>
-          </TouchableOpacity>)}
-          <Button onPress={e => { if (!chat.isReady()) chat.login(currentUser) }} title='登录' />
-        </View>
-        <TextInput ref={textInputRef} placeholder='发送消息' style={{
-          borderWidth: 2,
-          marginBottom: 9.888,
-          paddingVertical: 6.11,
-          paddingHorizontal: 9.888
-        }} onEndEditing={e => {
-          const message = chat.createTextMessage({
-            to: users.find(user => user.userID !== currentUser.userID)!.userID,
-            conversationType: TencentCloudChat.TYPES.CONV_C2C,
-            payload: { text: e.nativeEvent.text }
-          })
-          chat.sendMessage(message).then(imResponse => {
-            console.log('发送成功', imResponse);
-          })
-          setMessageList(messageList => [message, ...messageList || []])
-          textInputRef.current?.clear()
-        }}></TextInput>
-        {messageList?.map(msg => <ThemedText key={msg.ID}>{msg.payload.text}</ThemedText>)}
-      </ThemedView>
+      <ThemedText>v 0.0.2</ThemedText>
     </ParallaxScrollView>
   );
 }

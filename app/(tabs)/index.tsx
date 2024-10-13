@@ -74,7 +74,12 @@ export default function HomeScreen() {
   const [textInputValue, setTextInputValue] = useState<string>()
 
   const sendMessage = (text: string) => {
-    if (!chat.isReady()) return
+    if (!chat.isReady()) return Toast.show({
+      type: 'info',
+      text1: '请先登录',
+      position: 'top',
+      text1Style: { color: '#010101' }
+    })
     if (!text) return
     const message = chat.createTextMessage({
       to: users.find(user => user.userID !== currentUser.userID)!.userID,

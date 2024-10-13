@@ -104,8 +104,7 @@ export default function HomeScreen() {
       }>
 
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">🌐</ThemedText>
-        <ThemedText type="title">DAPP 浏览器</ThemedText>
+        <ThemedText type="title">🌐 DAPP 浏览器</ThemedText>
       </ThemedView>
       <ThemedView>
         <Link href='/details' asChild style={{ borderRadius: 100, overflow: 'hidden' }}>
@@ -118,8 +117,7 @@ export default function HomeScreen() {
       </ThemedView>
 
       <ThemedView style={[styles.titleContainer]}>
-        <ThemedText type="title">💬</ThemedText>
-        <ThemedText type="title">聊天</ThemedText>
+        <ThemedText type="title">💬 聊天</ThemedText>
       </ThemedView>
       <ThemedView>
         <ThemedView style={{ flexDirection: 'row', marginBottom: 16, gap: 9.888 }}>
@@ -166,8 +164,7 @@ export default function HomeScreen() {
       </ThemedView>
 
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">🖼</ThemedText>
-        <ThemedText type="title">图片浏览</ThemedText>
+        <ThemedText type="title">🖼 图片浏览</ThemedText>
       </ThemedView>
       <ThemedView style={{ flexDirection: 'row', marginBottom: 100, flexWrap: 'wrap', marginHorizontal: -16 / 0.618 }}>
         <Link href='/image?id=0' asChild style={{ minWidth: '100%', flex: 1 }}>

@@ -51,9 +51,8 @@ export default function TabTwoScreen() {
       <ThemedText>这个应用包含示例代码，帮助你快速入门。</ThemedText>
       <Collapsible title="基于文件的路由">
         <ThemedText>
-          这个应用有两个屏幕：{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> 和{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
+          这个应用有两个屏幕：
+          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> 和 <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
         </ThemedText>
         <ThemedText>
           <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText> 中的布局文件设置了标签导航器。

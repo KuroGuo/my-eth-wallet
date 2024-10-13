@@ -149,7 +149,7 @@ export default function HomeScreen() {
             borderRadius: 100,
             flex: 1
           }} onChangeText={text => { setTextInputValue(text) }} onSubmitEditing={e => {
-            sendMessage(e.nativeEvent.text)
+            sendMessage(e.nativeEventf.text1)
           }} cursorColor='black' />
           <ThemedView style={{ justifyContent: 'center' }}>
             <Button onPress={() => { if (textInputValue) sendMessage(textInputValue) }} title='　发送　' />

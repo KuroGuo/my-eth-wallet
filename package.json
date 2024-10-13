@@ -12,7 +12,8 @@
     "lint": "expo lint",
     "build:android": "eas build --platform android",
     "build:ios": "eas build --platform ios",
-    "build:web": "expo build:web"
+    "build:web": "expo build:web",
+    "update:prod": "eas update --channel production"
   },
   "jest": {
     "preset": "jest-expo"

@@ -40,14 +40,17 @@ export default function HomeScreen() {
 
         console.log('messageList', JSON.stringify(messageList, null, 2))
         setMessageList(messageList.reverse())
+
+        requestIdleCallback(() => {
+          Toast.show({
+            type: 'success',
+            text1: 'IM 已连接',
+            position: 'top',
+            text1Style: { color: '#010101' }
+          })
+        })
       })
       chat.on(TencentCloudChat.EVENT.MESSAGE_RECEIVED, onMessageReceived)
-      Toast.show({
-        type: 'success',
-        text1: 'IM 已连接',
-        position: 'top',
-        text1Style: { color: '#010101' }
-      })
     }
     const onNotReady = () => {
       Toast.show({

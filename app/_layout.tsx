@@ -40,7 +40,6 @@ export default function RootLayout() {
           animation: 'ios',
           headerBackTitle: "返回",
           headerTitleAlign: 'center'
-
         }}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />

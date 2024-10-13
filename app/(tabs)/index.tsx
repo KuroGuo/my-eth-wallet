@@ -1,6 +1,5 @@
-import { Image, StyleSheet, Platform, TouchableOpacity, Text, TextInput, View, Button } from 'react-native'
+import { Image, StyleSheet, Platform, TouchableOpacity, TextInput, Button } from 'react-native'
 
-import { HelloWave } from '@/components/HelloWave'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
@@ -55,7 +54,7 @@ export default function HomeScreen() {
     const onNotReady = () => {
       Toast.show({
         type: 'error',
-        text1: 'IM 连接已断开',
+        text1: 'IM 已断开',
         position: 'top',
         text1Style: { color: '#010101' }
       })
@@ -81,58 +80,48 @@ export default function HomeScreen() {
           style={styles.reactLogo}
         />
       }>
+
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title">🌐</ThemedText>
+        <ThemedText type="title">DAPP 浏览器</ThemedText>
+      </ThemedView>
       <ThemedView>
         <Link href='/details' asChild style={{ borderRadius: 100, overflow: 'hidden' }}>
           <TouchableOpacity activeOpacity={0.618}>
-            <Text style={{
-              color: 'white', textAlign: 'center', lineHeight: 35.776, backgroundColor: '#0081f1'
-            }}>DAPP 浏览器</Text>
+            <ThemedText style={{
+              color: 'white', textAlign: 'center', lineHeight: 16 * 2.618, backgroundColor: '#0081f1'
+            }}>打开 DAPP 浏览器</ThemedText>
           </TouchableOpacity>
         </Link>
       </ThemedView>
-      <View style={{ flexDirection: 'row' }}>
-        <Link href='/image?id=0' asChild style={{ flex: 1 }}>
-          <TouchableOpacity activeOpacity={0.618}>
-            <Image
-              src='https://data.debox.pro/static/2024/08/9/6khmmmou/7a8dafff3ba8f0f0e2dc6e90f6632c10.png'
-              style={{ height: 100 }}
-            />
-          </TouchableOpacity>
-        </Link>
-        <Link href='/image?id=1' asChild style={{ flex: 1 }}>
-          <TouchableOpacity activeOpacity={0.618}>
-            <Image
-              src='https://data.debox.pro/static/2023/12/21/oo0epp62/debox_christmas2023_1703141029261.png'
-              style={{ height: 100 }}
-            />
-          </TouchableOpacity>
-        </Link>
-      </View>
+
+      <ThemedView style={[styles.titleContainer, { marginTop: 0 }]}>
+        <ThemedText type="title">💬</ThemedText>
+        <ThemedText type="title">聊天</ThemedText>
+      </ThemedView>
       <ThemedView>
-        <View style={{ flexDirection: 'row', marginBottom: 16, gap: 9.888 }}>
-          {users.map(user => <TouchableOpacity key={user.userID} style={[
-            {
-              paddingVertical: 9.888,
-              paddingHorizontal: 16,
-              flex: 1
-            },
-            user.userID === currentUser.userID && [{
-              backgroundColor: '#0081f1',
-              borderRadius: 100
-            }]
-          ]} activeOpacity={0.618} onPress={() => setCurrentUser(user)}>
-            <Text style={[
-              { textAlign: 'center' },
-              user.userID === currentUser.userID && [{ color: 'white' }]
-            ]}>{user.userID}</Text>
-          </TouchableOpacity>)}
-          <View style={{ justifyContent: 'center' }}>
-            <Button onPress={e => { if (!chat.isReady()) chat.login(currentUser) }} title='登录' />
-          </View>
-        </View>
+        <ThemedView style={{ flexDirection: 'row', marginBottom: 16, gap: 9.888 }}>
+          <ThemedView style={{ flexDirection: 'row', gap: 6.11, flex: 1 }}>
+            {users.map(user => <TouchableOpacity key={user.userID} style={[
+              { flex: 1 },
+              user.userID === currentUser.userID && [{
+                backgroundColor: '#0081f1',
+                borderRadius: 100
+              }]
+            ]} activeOpacity={0.618} onPress={() => setCurrentUser(user)}>
+              <ThemedText style={[
+                { textAlign: 'center', lineHeight: 16 * 2.618 },
+                user.userID === currentUser.userID && [{ color: 'white' }]
+              ]}>{user.userID}</ThemedText>
+            </TouchableOpacity>)}
+          </ThemedView>
+          <ThemedView style={{ justifyContent: 'center' }}>
+            <Button onPress={e => { if (!chat.isReady()) chat.login(currentUser) }} title='　登录　' />
+          </ThemedView>
+        </ThemedView>
         <TextInput ref={textInputRef} placeholder='发送消息' style={{
           borderWidth: 2,
-          marginBottom: 9.888,
+          marginBottom: messageList?.length ? 9.888 : undefined,
           paddingVertical: 6.11,
           paddingHorizontal: 9.888
         }} onEndEditing={e => {
@@ -150,39 +139,31 @@ export default function HomeScreen() {
         }}></TextInput>
         {messageList?.map(msg => <ThemedText key={msg.ID}>{msg.payload.text}</ThemedText>)}
       </ThemedView>
+
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">欢迎光临</ThemedText>
-        <ThemedText type="title">👋</ThemedText>
+        <ThemedText type="title">🖼</ThemedText>
+        <ThemedText type="title">图片浏览</ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
+      <ThemedView style={{ flexDirection: 'row', marginBottom: 100 }}>
+        <Link href='/image?id=0' asChild style={{ flex: 1 }}>
+          <TouchableOpacity activeOpacity={0.618}>
+            <Image
+              src='https://data.debox.pro/static/2024/08/9/6khmmmou/7a8dafff3ba8f0f0e2dc6e90f6632c10.png'
+              style={{ height: 100 }}
+            />
+          </TouchableOpacity>
+        </Link>
+        <Link href='/image?id=1' asChild style={{ flex: 1 }}>
+          <TouchableOpacity activeOpacity={0.618}>
+            <Image
+              src='https://data.debox.pro/static/2023/12/21/oo0epp62/debox_christmas2023_1703141029261.png'
+              style={{ height: 100 }}
+            />
+          </TouchableOpacity>
+        </Link>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-      <ThemedText>v 0.0.3</ThemedText>
-    </ParallaxScrollView>
+
+    </ParallaxScrollView >
   );
 }
 
@@ -191,10 +172,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+    marginTop: 9.888,
   },
   reactLogo: {
     height: '100%',

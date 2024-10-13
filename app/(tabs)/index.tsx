@@ -141,7 +141,8 @@ export default function HomeScreen() {
         {messageList?.map(msg => <ThemedText key={msg.ID}>{msg.payload.text}</ThemedText>)}
       </ThemedView>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">欢迎光临 👋</ThemedText>
+        <ThemedText type="title">欢迎光临</ThemedText>
+        <ThemedText type="title">👋</ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>

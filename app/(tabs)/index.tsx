@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform, TouchableOpacity, TextInput, Button, Pressable } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, TextInput, Button, Pressable } from 'react-native'
 
 import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'

@@ -256,7 +256,7 @@ export default function Details() {
       options={{
         title: '详情',
         headerRight: () => (
-          <TouchableOpacity onPress={openMenu}>
+          <TouchableOpacity onPress={openMenu} hitSlop={32}>
             <Ionicons name='ellipsis-horizontal' size={24} color={colorScheme === 'dark' ? 'white' : 'black'} />
           </TouchableOpacity>
         ),

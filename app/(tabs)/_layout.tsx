@@ -17,6 +17,7 @@ export default function TabLayout() {
           paddingTop: 4,
           paddingBottom: 4
         },
+        headerTitleAlign: 'center'
         // tabBarLabelStyle: {
         // fontSize: 12,
         // marginBottom: 10,
@@ -34,7 +35,7 @@ export default function TabLayout() {
           title: 'Home',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
+          )
         }}
       />
       <Tabs.Screen

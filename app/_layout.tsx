@@ -19,11 +19,7 @@ setJSExceptionHandler((e: any, isFatal: any) => {
   if (isFatal) {
     Alert.alert(
       '未预期的错误发生',
-      `
-        Error: ${(isFatal) ? 'Fatal:' : ''} ${e.name} ${e.message}
-
-        我们将尝试恢复应用。
-      `,
+      `Error: ${(isFatal) ? 'Fatal:' : ''} ${e.name} ${e.message}\r\n\r\n我们将尝试恢复应用。`,
       [{ text: 'OK' }]
     )
   } else {

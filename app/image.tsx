@@ -2,6 +2,8 @@ import { Stack, router } from "expo-router"
 import Gallery from "react-native-awesome-gallery"
 import { useLocalSearchParams } from 'expo-router'
 import { Image } from 'expo-image'
+import { StatusBar } from "expo-status-bar"
+import { Platform } from "react-native"
 
 export default function ImageScreen() {
   const params = useLocalSearchParams()
@@ -12,6 +14,7 @@ export default function ImageScreen() {
       headerShown: false,
       gestureEnabled: false
     }} />
+    <StatusBar hidden={Platform.OS === 'ios'} />
     <Gallery
       data={[
         'https://data.debox.pro/im/image/2024/10/13/6khmmmou/96aa8ba44cf7b8a858ae4e2927593904.jpg',
